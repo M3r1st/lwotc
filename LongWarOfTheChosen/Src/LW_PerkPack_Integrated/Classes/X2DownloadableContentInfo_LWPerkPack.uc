@@ -655,7 +655,7 @@ static function bool AbilityTagExpandHandler_CH(string InString, out string OutS
 		case 'FocusedDefense_DodgeBonus_LW':
 			OutString = string(class'X2Ability_XMBPerkAbilitySet'.default.FocusedDefenseDodge);
 			return true;
-    case 'SensorOverlays_CritBonus_LW':
+		case 'SensorOverlays_CritBonus_LW':
 			OutString = string(class'X2Ability_XMBPerkAbilitySet'.default.SensorOverlaysCritBonus);
 			return true;
 		default:

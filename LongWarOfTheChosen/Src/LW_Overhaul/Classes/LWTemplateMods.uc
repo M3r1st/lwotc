@@ -2988,6 +2988,7 @@ function ReconfigGear(X2ItemTemplate Template, int Difficulty)
 			GremlinTemplate.ScanningChargesBonus = 1;
 			GremlinTemplate.AidProtocolBonus = 5;
 			GremlinTemplate.BaseDamage.Damage = 5;
+			GremlinTemplate.Abilities.AddItem('LW_T2GremlinIndicator');
 		}
 		if (GremlinTemplate.DataName == 'Gremlin_BM')
 		{
@@ -2995,14 +2996,17 @@ function ReconfigGear(X2ItemTemplate Template, int Difficulty)
 			GremlinTemplate.ScanningChargesBonus = 2;
 			GremlinTemplate.AidProtocolBonus = 10;
 			GremlinTemplate.BaseDamage.Damage = 8;
+			GremlinTemplate.Abilities.AddItem('LW_T3GremlinIndicator');
 		}
 		if (GremlinTemplate.DataName == 'SparkBit_MG')
 		{
 			GremlinTemplate.HealingBonus = 2;
+			GremlinTemplate.Abilities.AddItem('LW_T2GremlinIndicator');
 		}
 		if (GremlinTemplate.DataName == 'SparkBit_BM')
 		{
 			GremlinTemplate.HealingBonus = 4;
+			GremlinTemplate.Abilities.AddItem('LW_T3GremlinIndicator');
 		}
 	}
 	

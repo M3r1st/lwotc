@@ -50,6 +50,8 @@ Note that you need to own the Shen's Last Gift DLC to build (and play) this vers
  1. Download the LWOTC media assets (video, graphics and sound) from
     [this Google Drive link](https://drive.google.com/file/d/1P2njxwOIVeNDlox_21S5aQ2H_HqkMcvF/view?usp=sharing)
     and unpack the resulting zip file into this project's `LongWarOfTheChosen` directory. It should merge the contents of the `Content` and `ContentForCook` directories. If it replaces any version controlled files, `git checkout` them to restore their latest version.
+	
+	After unpacking, you may have to move `md_Warehouse_02.umap` and `sm_Megablock_Middle_Diner_LW` from `LongWarOfTheChosen\Content\Parcels` to `LongWarOfTheChosen\ContentForCook\Parcels`. Your build will fail if they are not present at this location.
 
  1. Build against [X2WOTCCommunityHighlander](https://steamcommunity.com/sharedfiles/filedetails/?id=1134256495): You should already be subscribed to it, since it's required by LWOTC. Locate it in your Workshop mods folder, typically `<path to Steam>\steamapps\workshop\content\268500\1134256495`. Under `Src`, there are folders `Core`, `Engine`, `X2WOTCCommunityHighlander`, and `XComGame`. Copy them under your SDK's `SrcOrig` (so that you overwrite `SrcOrig\Core`, etc. and add `SrcOrig\X2WOTCCommunityHighlander`).
 
@@ -83,13 +85,13 @@ Note that you need to own the Shen's Last Gift DLC to build (and play) this vers
     var XComGameState_InteractiveObject SpawnedObjective;
     ```
 
-    * In `XComGameState_Unit.uc`, modify line 34
+    * In `XComGameState_Unit.uc`, modify line 142
     ```
-    var private XComGameState_InteractiveObject SpawnedObjective;
+    var() protectedwrite array<StateObjectReference> InventoryItems;
     ```
     to
     ```
-    var XComGameState_InteractiveObject SpawnedObjective;
+    var() array<StateObjectReference> InventoryItems;
     ```
 
  1. Run the following from the LWOTC project directory:

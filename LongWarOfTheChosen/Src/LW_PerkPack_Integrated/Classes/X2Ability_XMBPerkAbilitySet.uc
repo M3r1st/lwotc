@@ -163,6 +163,8 @@ static function array<X2DataTemplate> CreateTemplates()
 
 	Templates.AddItem(LeadTheTarget_LW());
 	Templates.AddItem(LeadTheTargetShot_LW());
+	Templates.AddItem(GremlinTierPassive('LW_T2GremlinIndicator'));
+	Templates.AddItem(GremlinTierPassive('LW_T3GremlinIndicator'));
 	Templates.AddItem(BlindingProtocol_LW());
 	Templates.AddItem(ApexPredator_LW());
 	Templates.AddItem(ApexPredatorPanic_LW());
@@ -793,6 +795,20 @@ static function EventListenerReturn LTTListener(Object EventData, Object EventSo
 	
 
 	return ELR_NoInterrupt;
+}
+
+static function X2AbilityTemplate GremlinTierPassive(name DataName)
+{
+	local X2AbilityTemplate		Template;
+
+	Template = PurePassive(DataName, "", false, 'eAbilitySource_Item', false);
+
+	Template.bHideOnClassUnlock = true;
+	Template.bDisplayInUITooltip = false;
+	Template.bDisplayInUITacticalText = false;
+	Template.bDontDisplayInAbilitySummary = true;
+
+	return Template;
 }
 
 static function X2AbilityTemplate BlindingProtocol_LW()

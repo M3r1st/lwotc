@@ -31,9 +31,6 @@ function bool PostAbilityCostPaid(XComGameState_Effect EffectState, XComGameStat
 	if (SourceUnit.IsUnitAffectedByEffectName(class'X2Effect_Serial'.default.EffectName))
 		return false;
 
-	if (SourceUnit.IsUnitAffectedByEffectName(class'X2Effect_Reaper'.default.EffectName))
-		return false;
-
 	// Don't proc on a Skirmisher interrupt turn (for example with Battle Lord)
 	if (class'Helpers_LW'.static.IsUnitInterruptingEnemyTurn(SourceUnit))
 		return false;

@@ -304,8 +304,8 @@ static function UpdateAbilities(X2AbilityTemplate Template, int Difficulty)
 			break;
 	}
 
-	// Handle multi-shot abilities
-	UpdateMultiShotAbility(Template);
+	// Deprecated multi-shot patching that is no longer needed and only breaks things.
+	// UpdateMultiShotAbility(Template);
 	UpdateMeleeAbilityForBloodThirst(Template);
 }
 
@@ -1573,6 +1573,7 @@ static function PatchFullerOverride(X2AbilityTemplate Template)
 
 // Patches any multi-shot abilities that are configured in the
 // MULTI_SHOT_ABILITIES config.
+// DEPRECATED, no longer called
 static function UpdateMultiShotAbility(X2AbilityTemplate Template)
 {
 	local MultiShotAbility AbilityData;

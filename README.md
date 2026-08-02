@@ -38,8 +38,8 @@ Note that you need to own the Shen's Last Gift DLC to build (and play) this vers
     for details on how to do that (plus lots of other useful information)
 
  1. Set up the following environment variables:
-    * `XCOM2SDKPATH` — typically &lt;path to Steam&gt;\steamapps\common\XCOM 2 War Of The Chosen SDK
-    * `XCOM2GAMEPATH` — typically &lt;path to Steam&gt;\steamapps\common\XCOM 2\XCom2-WarOfTheChosen
+    * `XCOM2SDKPATH` — typically `<path to Steam>\steamapps\common\XCOM 2 War Of The Chosen SDK`
+    * `XCOM2GAMEPATH` — typically `<path to Steam>\steamapps\common\XCOM 2\XCom2-WarOfTheChosen`
     Don't put these paths in quotes.
 
  1. [Fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
@@ -50,10 +50,12 @@ Note that you need to own the Shen's Last Gift DLC to build (and play) this vers
  1. Download the LWOTC media assets (video, graphics and sound) from
     [this Google Drive link](https://drive.google.com/file/d/1P2njxwOIVeNDlox_21S5aQ2H_HqkMcvF/view?usp=sharing)
     and unpack the resulting zip file into this project's `LongWarOfTheChosen` directory. It should merge the contents of the `Content` and `ContentForCook` directories. If it replaces any version controlled files, `git checkout` them to restore their latest version.
+	
+	After unpacking, you may have to move `md_Warehouse_02.umap` and `sm_Megablock_Middle_Diner_LW` from `LongWarOfTheChosen\Content\Parcels` to `LongWarOfTheChosen\ContentForCook\Parcels`. Your build will fail if they are not present at this location.
 
- 1. Build against [X2WOTCCommunityHighlander](https://steamcommunity.com/sharedfiles/filedetails/?id=1134256495): You should already be subscribed to it, since it's required by LWOTC. Locate it in your Workshop mods folder, typically `&lt;path to Steam&gt;\steamapps\workshop\content\268500\1134256495`. Under `Src`, there are folders `Core`, `Engine`, `X2WOTCCommunityHighlander`, and `XComGame`. Copy them under your SDK's `SrcOrig` (so that you overwrite `SrcOrig\Core`, etc. and add `SrcOrig\X2WOTCCommunityHighlander`).
+ 1. Build against [X2WOTCCommunityHighlander](https://steamcommunity.com/sharedfiles/filedetails/?id=1134256495): You should already be subscribed to it, since it's required by LWOTC. Locate it in your Workshop mods folder, typically `<path to Steam>\steamapps\workshop\content\268500\1134256495`. Under `Src`, there are folders `Core`, `Engine`, `X2WOTCCommunityHighlander`, and `XComGame`. Copy them under your SDK's `SrcOrig` (so that you overwrite `SrcOrig\Core`, etc. and add `SrcOrig\X2WOTCCommunityHighlander`).
 
- 1. Build against [[WOTC] Community Promotion Screen](https://steamcommunity.com/sharedfiles/filedetails/?id=2550561145): You should already be subscribed to it, since it's required by LWOTC. Locate it in your Workshop mods folder, typically `&lt;path to Steam&gt;\steamapps\workshop\content\268500\2550561145`. Under `Src`, there is a folder `NewPromotionScreenbyDefault`. Copy it under your SDK's `SrcOrig` (so that you have `SrcOrig\NewPromotionScreenbyDefault`).
+ 1. Build against [[WOTC] Community Promotion Screen](https://steamcommunity.com/sharedfiles/filedetails/?id=2550561145): You should already be subscribed to it, since it's required by LWOTC. Locate it in your Workshop mods folder, typically `<path to Steam>\steamapps\workshop\content\268500\2550561145`. Under `Src`, there is a folder `NewPromotionScreenbyDefault`. Copy it under your SDK's `SrcOrig` (so that you have `SrcOrig\NewPromotionScreenbyDefault`).
 
  1. Modify some files in your WOTC SDK's `SrcOrig`:
     * In `X2SitRepEffect_ModifyKismetVariable.uc`, modify line 27
@@ -83,6 +85,15 @@ Note that you need to own the Shen's Last Gift DLC to build (and play) this vers
     var XComGameState_InteractiveObject SpawnedObjective;
     ```
 
+    * In `XComGameState_Unit.uc`, modify line 142
+    ```
+    var() protectedwrite array<StateObjectReference> InventoryItems;
+    ```
+    to
+    ```
+    var() array<StateObjectReference> InventoryItems;
+    ```
+
  1. Run the following from the LWOTC project directory:
     ```
     > build-lwotc.bat -config default
@@ -102,6 +113,10 @@ If you find you can't complete the issue in a reasonable time, please add anothe
 the issue.
 
 All contributions are welcome, but bug fixes are _extremely_ welcome!
+
+### No AI Policy
+
+PRs that modify code and are recognizably made with an LLM/AI are not accepted.
 
 ## Acknowledgements
 

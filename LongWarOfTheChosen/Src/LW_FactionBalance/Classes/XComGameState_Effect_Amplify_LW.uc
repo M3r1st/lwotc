@@ -3,20 +3,22 @@
 //  AUTHOR:  Grobobobo
 //  PURPOSE: Makes the Amplify effect work for a flat number of attacks
 //---------------------------------------------------------------------------------------
-class XComGameState_Effect_Amplify_LW extends XComGameState_Effect;
-
-var int ShotsRemaining;
+class XComGameState_Effect_Amplify_LW extends XComGameState_Effect_Amplify;
 
 function PostCreateInit(EffectAppliedData InApplyEffectParameters, GameRuleStateChange WatchRule, XComGameState NewGameState)
 {
-	local XComGameState_Unit SourceUnit;
+    local X2Effect_Amplify_LW AmplifyEffect;
 
-	super.PostCreateInit(InApplyEffectParameters, WatchRule, NewGameState);
+    super(XComGameState_Effect).PostCreateInit(InApplyEffectParameters, WatchRule, NewGameState);
 
-	SourceUnit = XComGameState_Unit(NewGameState.GetGameStateForObjectID(InApplyEffectParameters.SourceStateObjectRef.ObjectID));
-	if (SourceUnit == none)
-		SourceUnit = XComGameState_Unit(`XCOMHISTORY.GetGameStateForObjectID(InApplyEffectParameters.SourceStateObjectRef.ObjectID));
-	`assert(SourceUnit != none);
+    AmplifyEffect = X2Effect_Amplify_LW(GetX2Effect());
 
-	ShotsRemaining = class'X2Ability_TemplarAbilitySet_LW'.default.AMPLIFY_SHOTS;
+    if (AmplifyEffect != none)
+    {
+        ShotsRemaining = AmplifyEffect.NumShots;
+    }
+    else
+    {
+        ShotsRemaining = class'X2Ability_TemplarAbilitySet_LW'.default.AMPLIFY_SHOTS;
+    }
 }

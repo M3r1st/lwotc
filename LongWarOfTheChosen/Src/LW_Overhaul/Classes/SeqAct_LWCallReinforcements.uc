@@ -228,7 +228,7 @@ function SpawnReinforcements(int ReinforceIndex, XComGameState NewGameState)
 				// LWOTC: Since the reinforcement spawner doesn't seem to do a good job of
 				// randomisation spawn locations, we manually randomise the spawn location
 				// and use a smaller tile offset for InitiateReinforcements().
-				Location = GenerateRandomSpawnLocation(`SPAWNMGR.GetCurrentXComLocation(), IdealSpawnTilesOffset);
+				Location = GenerateRandomSpawnLocation(GetXComLocation(), IdealSpawnTilesOffset);
 		
 				class'XComGameState_AIReinforcementSpawner'.static.InitiateReinforcements(
 					EncounterID,
@@ -252,8 +252,8 @@ function SpawnReinforcements(int ReinforceIndex, XComGameState NewGameState)
 			// LWOTC: Since the reinforcement spawner doesn't seem to do a good job of
 			// randomisation spawn locations, we manually randomise the spawn location
 			// and use a smaller tile offset for InitiateReinforcements().
-			Location = GenerateRandomSpawnLocation(`SPAWNMGR.GetCurrentXComLocation(), IdealSpawnTilesOffset);
-	
+			Location = GenerateRandomSpawnLocation(GetXComLocation(), IdealSpawnTilesOffset);
+	 
 			// LWOTC: It appears that the second argument to InitiateReinforcements should
 			// be -1, not 0, in order to use the reinforcement countdown of the encounter.
 			class'XComGameState_AIReinforcementSpawner'.static.InitiateReinforcements(
@@ -301,6 +301,44 @@ static function Vector GenerateRandomSpawnLocation(Vector AnchorPoint, int TileO
 	}
 
 	return TrySpawnLocation;
+}
+// LWOTC: For some reason(Native code), the usual "`SPAWNMGR.GetCurrentXComLocation" can return a location that is out of bounds.
+// This can cause the GenerateRandomSpawnLocation function to loop infinitely, which appears as a freeze to players. This function solves that issue.
+//
+// Returns the average position of every living XCom soldier.
+static function Vector GetXComLocation() 
+{
+	local XComGameStateHistory History;
+	local XComGameState_HeadquartersXCom XComHQ;
+	local XComGameState_Unit UnitState;
+	local int idx, LivingCount;
+	local Vector CombinedLivingPositions;
+
+	History = `XCOMHISTORY;
+	XComHQ = `XCOMHQ;
+
+	LivingCount = 0;
+
+	for(idx = 0; idx < XComHQ.Squad.Length; idx++)
+	{
+		UnitState = XComGameState_Unit(History.GetGameStateForObjectID(XComHQ.Squad[idx].ObjectID));
+
+		if(UnitState != none)
+		{
+			if(!UnitState.IsDead())
+			{
+				LivingCount++;
+				CombinedLivingPositions += `XWORLD.GetPositionFromTileCoordinates(UnitState.TileLocation);
+			}
+		}
+	}
+
+	// LWOTC: Do not divide by zero.
+	if (LivingCount == 0) {
+		return CombinedLivingPositions;
+	} else {
+		return CombinedLivingPositions / LivingCount;
+	}
 }
 
 defaultproperties

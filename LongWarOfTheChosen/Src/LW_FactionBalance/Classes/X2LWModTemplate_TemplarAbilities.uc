@@ -343,7 +343,7 @@ static function DisableFocusGainDuringApotheosis(X2AbilityTemplate Template)
 static function ModifyAmplifyEffect(X2AbilityTemplate Template)
 {
 	local X2Effect_Amplify_LW   AmplifyEffect;
-	local X2AbilityTag          AbilityTag;
+	// local X2AbilityTag          AbilityTag;
 
 	class'Helpers_LW'.static.RemoveAbilityTargetEffects(Template,'X2Effect_Amplify');
 
@@ -364,14 +364,20 @@ static function ModifyAmplifyEffect(X2AbilityTemplate Template)
 	}
 	AmplifyEffect.bRemoveWhenTargetDies = true;
 
-	AbilityTag = X2AbilityTag(`XEXPANDCONTEXT.FindTag("Ability"));
-	AbilityTag.ParseObj = AmplifyEffect;
 	AmplifyEffect.SetDisplayInfo(ePerkBuff_Penalty,
 		class'X2Ability_TemplarAbilitySet'.default.AmplifyEffectName,
-		`XEXPAND.ExpandString(class'X2Ability_TemplarAbilitySet'.default.AmplifyEffectDesc),
+		class'X2Ability_TemplarAbilitySet'.default.AmplifyEffectDesc,
 		Template.IconImage,,,
 		Template.AbilitySourceName);
-	AbilityTag.ParseObj = none;
+
+	// AbilityTag = X2AbilityTag(`XEXPANDCONTEXT.FindTag("Ability"));
+	// AbilityTag.ParseObj = AmplifyEffect;
+	// AmplifyEffect.SetDisplayInfo(ePerkBuff_Penalty,
+	// 	class'X2Ability_TemplarAbilitySet'.default.AmplifyEffectName,
+	// 	`XEXPAND.ExpandString(class'X2Ability_TemplarAbilitySet'.default.AmplifyEffectDesc),
+	// 	Template.IconImage,,,
+	// 	Template.AbilitySourceName);
+	// AbilityTag.ParseObj = none;
 
 	Template.AddTargetEffect(AmplifyEffect);
 

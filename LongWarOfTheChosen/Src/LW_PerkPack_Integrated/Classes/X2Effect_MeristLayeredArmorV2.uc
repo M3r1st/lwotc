@@ -7,19 +7,10 @@
 //---------------------------------------------------------------------------------------
 class X2Effect_MeristLayeredArmorV2 extends X2Effect_MeristLayeredArmor;
 
-// Damage cap per round:
-// var float PrcDamageCap;
-// var bool bUseDifficulySettings;
-// var array<float> PrcDamageCapDifficulty;
-// var protectedwrite array<AdditionalDamageCapInfo> AdditionalPrcDamageCap;
-
-// Not used for this effect
-// var private string strFlyoverMessage;
-// var private string strFlyoverIcon;
-
 // Damage reduction IN PERCENTS above the cap
 var float FinalPrcDamageModifier;
 var array<float> FinalPrcDamageModifierDifficulty;
+var float MaxFinalPrcDamageModifier;
 
 function float GetFinalDamageModifierPercent(XComGameState_Unit Unit)
 {
@@ -29,7 +20,9 @@ function float GetFinalDamageModifierPercent(XComGameState_Unit Unit)
         DamageModifier = FinalPrcDamageModifierDifficulty[`TACTICALDIFFICULTYSETTING];
     else
         DamageModifier = FinalPrcDamageModifier;
-    
+
+    DamageModifier = FMin(DamageModifier, MaxFinalPrcDamageModifier);
+    `LOG("DamageModifier = " $ DamageModifier, default.bLog, default.Class.Name);
     return DamageModifier;
 }
 
@@ -43,15 +36,12 @@ function float GetPostDefaultDefendingDamageModifier_CH(
     X2Effect_ApplyWeaponDamage WeaponDamageEffect,
     XComGameState NewGameState)
 {
-    local X2AbilityTemplate AbilityTemplate;
-    local X2AbilityMultiTarget_BurstFire BurstFire;
-    local int MaxHealth;
-    local int DamageTaken;
-    local int MaxDamage;
-    local int DamageOverflow;
-    local int BurstFullDamage;
-    local int BurstFireOverflow;
+    local XComGameState_Unit NewTargetState;
+    local float MaxHealth, DamageTaken, MaxDamage, DamageOverflow, DamageReduction;
     local UnitValue UValue;
+    // Variables for preview
+    local int NumHits;
+    local float FullDamage, FullDamageOverflow;
 
     if (class'XComGameStateContext_Ability'.static.IsHitResultHit(ApplyEffectParameters.AbilityResultContext.HitResult))
     {
@@ -59,37 +49,54 @@ function float GetPostDefaultDefendingDamageModifier_CH(
         {
             if (TargetUnit != none)
             {
-                MaxHealth = TargetUnit.GetMaxStat(eStat_HP);
+                `LOG(">>>", default.bLog, default.Class.Name);
+                `LOG("WeaponDamage = " $ WeaponDamage, default.bLog, default.Class.Name);
+                MaxHealth = TargetUnit.GetMaxStat(eStat_HP) + 0.01f;
+                `LOG("MaxHealth = " $ MaxHealth, default.bLog, default.Class.Name);
                 TargetUnit.GetUnitValue('DamageThisTurn', UValue);
-                DamageTaken = int(UValue.fValue);
-                MaxDamage = Max(Round(MaxHealth * GetPercentDamageCap(TargetUnit) / 100) - DamageTaken, 0);
-                `LOG("==================================================", bLog, 'X2Effect_MeristLayeredArmorV2');
-                `LOG("Remaining damage: " $ MaxDamage, bLog, 'X2Effect_MeristLayeredArmorV2');
-
-                AbilityTemplate = AbilityState.GetMyTemplate();
-                BurstFire = X2AbilityMultiTarget_BurstFire(AbilityTemplate.AbilityMultiTargetStyle);
-                if (BurstFire == none || !bCapBurstFire)
+                DamageTaken = UValue.fValue;
+                `LOG("DamageTaken = " $ DamageTaken, default.bLog, default.Class.Name);
+                MaxDamage = FMax(MaxHealth * GetPercentDamageCap(TargetUnit) / 100 - DamageTaken, 0);
+                `LOG("MaxDamage = " $ MaxDamage, default.bLog, default.Class.Name);
+                if (bCheckGameState)
                 {
-                    DamageOverflow = Clamp(WeaponDamage - MaxDamage, 0, WeaponDamage);
-                    `LOG("Overflow: " $ DamageOverflow, bLog, 'X2Effect_MeristLayeredArmorV2');
-                    
-                    return -1 * Round(DamageOverflow * GetFinalDamageModifierPercent(TargetUnit) / 100);
+                    if (NewGameState != none)
+                    {
+                        NewTargetState = XComGameState_Unit(NewGameState.GetGameStateForObjectID(TargetUnit.ObjectID));
+                        if (NewTargetState != none)
+                        {
+                            `LOG("NewTargetState != none", default.bLog, default.Class.Name);
+                            NewTargetState.GetUnitValue('DamageThisTurn', UValue);
+                            DamageTaken = UValue.fValue;
+                            MaxDamage = FMax(MaxHealth * GetPercentDamageCap(TargetUnit) / 100 - DamageTaken, 0);
+                            `LOG("MaxDamage = " $ MaxDamage, default.bLog, default.Class.Name);
+                        }
+                    }
+                    else // This is damage preview
+                    {
+                        NumHits = GetNumHitsForAbility(AbilityState);
+                        `LOG("NumHits = " $ NumHits, default.bLog, default.Class.Name);
+                        if (NumHits > 1)
+                        {
+                            FullDamage = WeaponDamage * NumHits;
+                            `LOG("FullDamage = " $ FullDamage, default.bLog, default.Class.Name);
+                            FullDamageOverflow = FClamp(FullDamage - MaxDamage, 0, FullDamage);
+                            `LOG("FullDamageOverflow = " $ FullDamageOverflow, default.bLog, default.Class.Name);
+                            DamageOverflow = FClamp(FullDamageOverflow / NumHits, 0, WeaponDamage);
+                            `LOG("DamageOverflow = " $ DamageOverflow, default.bLog, default.Class.Name);
+                            DamageReduction = FClamp(DamageOverflow * GetFinalDamageModifierPercent(TargetUnit) / 100, 0, WeaponDamage);
+                            `LOG("DamageReduction = " $ DamageReduction, default.bLog, default.Class.Name);
+                            `LOG("<<<", default.bLog, default.Class.Name);
+                            return -1 * DamageReduction;
+                        }
+                    }
                 }
-                else
-                {
-                    // Each of Burst Fire shots applies at the same time,
-                    // causing Layred Armor to not apply.
-                    // Use full Burst Fire damage to figure out how much of each shot should be ignored
-                    BurstFullDamage = WeaponDamage * (1 + BurstFire.NumExtraShots);
-                    DamageOverflow = Clamp(BurstFullDamage - MaxDamage, 0, BurstFullDamage);
-                    `LOG("Expected Burst Fire DamageOverflow: " $ DamageOverflow, bLog, 'X2Effect_MeristLayeredArmorV2');
-
-                    BurstFireOverflow = Clamp(Round(DamageOverflow / (1 + BurstFire.NumExtraShots)), 0, WeaponDamage);
-                    `LOG("DamageOverflow per shot: " $ BurstFireOverflow, bLog, 'X2Effect_MeristLayeredArmorV2');
-
-                    return -1 * Round(BurstFireOverflow * GetFinalDamageModifierPercent(TargetUnit) / 100);
-                }
-                `LOG("==================================================", bLog, 'X2Effect_MeristLayeredArmorV2');
+                DamageOverflow = FClamp(WeaponDamage - MaxDamage, 0, WeaponDamage);
+                `LOG("DamageOverflow = " $ DamageOverflow, default.bLog, default.Class.Name);
+                DamageReduction = FClamp(DamageOverflow * GetFinalDamageModifierPercent(TargetUnit) / 100, 0, WeaponDamage);
+                `LOG("DamageReduction = " $ DamageReduction, default.bLog, default.Class.Name);
+                `LOG("<<<", default.bLog, default.Class.Name);
+                return -1 * DamageReduction;
             }
         }
     }
@@ -99,5 +106,6 @@ function float GetPostDefaultDefendingDamageModifier_CH(
 
 defaultproperties
 {
-    bDisplayInSpecialDamageMessageUI = true;
+    EffectName = "EnhancedLayeredArmor"
+    MaxFinalPrcDamageModifier = 95.0
 }

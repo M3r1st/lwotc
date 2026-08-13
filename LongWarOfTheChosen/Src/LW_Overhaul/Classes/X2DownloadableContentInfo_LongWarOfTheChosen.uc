@@ -5392,6 +5392,9 @@ static function bool AbilityTagExpandHandler(string InString, out string OutStri
 		case 'IMPACT_V2_DAMAGE_CAP':
 			Outstring = string(int(class'X2Ability_LW_ChosenAbilities'.default.IMPACT_V2_DAMAGE_CAP[`TACTICALDIFFICULTYSETTING]));
 			return true;
+		case 'IMPENETRABLE_BONUS_PCT_DR':
+			OutString = string(int(class'X2Ability_LW_ChosenAbilities'.default.IMPENETRABLE_BONUS_PCT_DR));
+			return true;
 		case 'IMPACT_V2_PCT_DR':
 			Outstring = string(int(class'X2Ability_LW_ChosenAbilities'.default.IMPACT_V2_PCT_DR[`TACTICALDIFFICULTYSETTING]));
 			return true;

@@ -35,6 +35,7 @@ var config float IMPACT_COMPENSATION_PCT_DR;
 var config int IMPACT_COMPENSATION_MAX_STACKS;
 var config array<float> IMPACT_V2_DAMAGE_CAP;
 var config array<float> IMPACT_V2_PCT_DR;
+var config float IMPENETRABLE_BONUS_PCT_DR;
 
 var config array<float> IMPACT_V2XCOM_DAMAGE_CAP;
 var config array<float> IMPACT_V2XCOM_PCT_DR;
@@ -2123,68 +2124,51 @@ static function X2AbilityTemplate ImpactCompensation()
 
 static function X2AbilityTemplate ImpactCompensationV2()
 {
-	local X2AbilityTemplate					Template;
-	//local X2Effect_ImpactCompensationCapped		ImpactEffect;
-	local X2Effect_MeristLayeredArmorV2 Effect2;
-	local X2Effect_MeristLayeredArmor	Effect1;
-
+	local X2AbilityTemplate                     Template;
+	local X2AbilityTrigger_UnitPostBeginPlay    Trigger;
+	local X2Effect_MeristLayeredArmorV2         EnhancedArmourEffect;
+	local X2Effect_MeristLayeredArmor           ArmourEffect;
+	local X2Effect_ClearUnitValuesOnTick        ValueEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'ImpactCompensationV2_LW');
-	Template.IconImage = "img:///UILibrary_MW.UIPerk_intimidate";
+
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
+	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
 	Template.Hostility = eHostility_Neutral;
-	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_NeverShow;
+	Template.IconImage = "img:///UILibrary_MW.UIPerk_intimidate";
+	Template.bUniqueSource = true;
+
 	Template.AbilityToHitCalc = default.DeadEye;
-    Template.AbilityTargetStyle = default.SelfTarget;
-	Template.bShowActivation = false;
-	Template.bSkipFireAction = true;
+	Template.AbilityTargetStyle = default.SelfTarget;
+	Trigger = new class'X2AbilityTrigger_UnitPostBeginPlay';
+	Trigger.Priority = 0; // Must start after other damage reduction abilities.
+	Template.AbilityTriggers.AddItem(Trigger);
 
-	Template.AbilityShooterConditions.AddItem(default.LivingShooterProperty);
-	Template.AbilityTriggers.AddItem(default.UnitPostBeginPlayTrigger);
+	EnhancedArmourEffect = new class'X2Effect_MeristLayeredArmorV2';
+	EnhancedArmourEffect.bUseDifficulySettings = true;
+	EnhancedArmourEffect.PrcDamageCapDifficulty = default.IMPACT_V2_DAMAGE_CAP;
+	EnhancedArmourEffect.FinalPrcDamageModifierDifficulty = default.IMPACT_V2_PCT_DR;
+	EnhancedArmourEffect.AddAdditionalDamageCapInfo('Impenetrable_LW', -1 * default.IMPENETRABLE_BONUS_PCT_DR);
+	EnhancedArmourEffect.BuildPersistentEffect(1, true, false);
+	EnhancedArmourEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.LocHelpText, Template.IconImage,,, Template.AbilitySourceName);
+	Template.AddTargetEffect(EnhancedArmourEffect);
 
-	/*
-	ImpactEffect = new class'X2Effect_ImpactCompensationCapped';
-	ImpactEffect.DamageModifier = default.IMPACT_V2_PCT_DR;
-	ImpactEffect.MaxCap = default.IMPACT_V2_DAMAGE_CAP;
-	ImpactEffect.BuildPersistentEffect(1, true, false);
-	ImpactEffect.SetDisplayInfo(ePerkBuff_Bonus, Template.LocFriendlyName, Template.LocLongDescription, Template.IconImage, true,,Template.AbilitySourceName);
+	ArmourEffect = new class'X2Effect_MeristLayeredArmor';
+	ArmourEffect.bUseDifficulySettings = true;
+	ArmourEffect.PrcDamageCapDifficulty = default.IMPACT_V2_DAMAGE_CAP;
+	ArmourEffect.BuildPersistentEffect(1, true, false);
+	ArmourEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.LocHelpText, Template.IconImage, false);
+	Template.AddTargetEffect(ArmourEffect);
 
-	ImpactEffect.DuplicateResponse = eDupe_Ignore;
-	Template.AddTargetEffect(ImpactEffect);
-	*/
-
-	Effect2 = new class'X2Effect_MeristLayeredArmorV2';
-    Effect2.EffectName = 'EnhancedLayeredArmorEffect';
-	Effect2.bUseDifficulySettings = true;
-    Effect2.FinalPrcDamageModifierDifficulty = default.IMPACT_V2_PCT_DR;
-    Effect2.PrcDamageCapDifficulty = default.IMPACT_V2_DAMAGE_CAP;
-    Effect2.bCapBurstFire = true;
-	Effect2.AddAdditionalDamageCapInfo('Impenetrable_LW', -10, false);
-    Effect2.BuildPersistentEffect(1, true, false);
-    Effect2.SetDisplayInfo(ePerkBuff_Bonus, Template.locFriendlyName, Template.LocLongDescription, Template.IconImage, true,, Template.AbilitySourceName);
-	Effect2.DuplicateResponse = eDupe_Ignore;
-    Template.AddTargetEffect(Effect2);
-
-    Effect1 = new class'X2Effect_MeristLayeredArmor';
-    Effect1.EffectName = 'LayeredArmorEffect';
-    Effect1.PrcDamageCap = 40;
-    Effect1.strFlyoverMessage = "Layered Armor";
-	Effect1.bDisplayInSpecialDamageMessageUI = true;
-    Effect1.BuildPersistentEffect(1, true, false);
-    //Effect1.SetDisplayInfo(ePerkBuff_Bonus, "Layered Armor", "", Template.IconImage, true,, Template.AbilitySourceName);
-	Effect1.DuplicateResponse = eDupe_Ignore;
-    Template.AddTargetEffect(Effect1);
+	// This effects ticks at start of each players' turn
+	ValueEffect = new class'X2Effect_ClearUnitValuesOnTick';
+	ValueEffect.ValuesToClear.AddItem('DamageThisTurn');
+	ValueEffect.BuildPersistentEffect(1, true, false, true, eGameRule_PlayerTurnBegin);
+	Template.AddTargetEffect(ValueEffect);
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
-	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
-	//Template.BuildInterruptGameStateFn = TypicalAbility_BuildInterruptGameState;
 
-	Template.AdditionalAbilities.AddItem('ClearDamageThisTurnAbility_LW');
-
-	Template.ConcealmentRule = eConceal_Always;
-
-	Template.bDisplayInUITooltip = true;
-	Template.bDisplayInUITacticalText = true;
+	Template.OverrideAbilities.AddItem('LayeredArmour_LW');
 
 	return Template;
 }
@@ -2201,65 +2185,50 @@ static function X2AbilityTemplate ImpactCompensationPassiveV2()
 
 static function X2AbilityTemplate ImpactCompensationV2XCOM()
 {
-	local X2AbilityTemplate					Template;
-	//local X2Effect_ImpactCompensationCapped		ImpactEffect;
-	local X2Effect_MeristLayeredArmorV2 Effect2;
-	local X2Effect_MeristLayeredArmor	Effect1;
+	local X2AbilityTemplate                     Template;
+	local X2AbilityTrigger_UnitPostBeginPlay    Trigger;
+	local X2Effect_MeristLayeredArmorV2         EnhancedArmourEffect;
+	local X2Effect_MeristLayeredArmor           ArmourEffect;
+	local X2Effect_ClearUnitValuesOnTick        ValueEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'ImpactCompensationV2XCOM_LW');
-	Template.IconImage = "img:///UILibrary_MW.UIPerk_intimidate";
+
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
+	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
 	Template.Hostility = eHostility_Neutral;
-	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_NeverShow;
+	Template.IconImage = "img:///UILibrary_MW.UIPerk_intimidate";
+	Template.bUniqueSource = true;
+
 	Template.AbilityToHitCalc = default.DeadEye;
-    Template.AbilityTargetStyle = default.SelfTarget;
-	Template.bShowActivation = false;
-	Template.bSkipFireAction = true;
+	Template.AbilityTargetStyle = default.SelfTarget;
+	Trigger = new class'X2AbilityTrigger_UnitPostBeginPlay';
+	Trigger.Priority = 0; // Must start after other damage reduction abilities.
+	Template.AbilityTriggers.AddItem(Trigger);
 
-	Template.AbilityShooterConditions.AddItem(default.LivingShooterProperty);
-	Template.AbilityTriggers.AddItem(default.UnitPostBeginPlayTrigger);
-	/*
-	ImpactEffect = new class'X2Effect_ImpactCompensationCapped';
-	ImpactEffect.DamageModifier = default.IMPACT_V2XCOM_PCT_DR;
-	ImpactEffect.MaxCap = default.IMPACT_V2XCOM_DAMAGE_CAP;
-	ImpactEffect.BuildPersistentEffect(1, true, false);
-	ImpactEffect.SetDisplayInfo(ePerkBuff_Bonus, Template.LocFriendlyName, Template.LocLongDescription, Template.IconImage, true,,Template.AbilitySourceName);
+	EnhancedArmourEffect = new class'X2Effect_MeristLayeredArmorV2';
+	EnhancedArmourEffect.bUseDifficulySettings = true;
+	EnhancedArmourEffect.PrcDamageCapDifficulty = default.IMPACT_V2XCOM_DAMAGE_CAP;
+	EnhancedArmourEffect.FinalPrcDamageModifierDifficulty = default.IMPACT_V2XCOM_PCT_DR;
+	EnhancedArmourEffect.BuildPersistentEffect(1, true, false);
+	EnhancedArmourEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.LocHelpText, Template.IconImage,,, Template.AbilitySourceName);
+	Template.AddTargetEffect(EnhancedArmourEffect);
 
-	ImpactEffect.DuplicateResponse = eDupe_Ignore;
-	Template.AddTargetEffect(ImpactEffect);
- 	*/
-	Effect2 = new class'X2Effect_MeristLayeredArmorV2';
-    Effect2.EffectName = 'EnhancedLayeredArmorEffect';
-	Effect2.bUseDifficulySettings = true;
-    Effect2.FinalPrcDamageModifierDifficulty = default.IMPACT_V2XCOM_PCT_DR;
-    Effect2.PrcDamageCapDifficulty = default.IMPACT_V2XCOM_DAMAGE_CAP;
-    Effect2.bCapBurstFire = true;
-    Effect2.BuildPersistentEffect(1, true, false);
-	Effect2.bDisplayInSpecialDamageMessageUI = true;
-    Effect2.SetDisplayInfo(ePerkBuff_Bonus, Template.locFriendlyName, Template.LocLongDescription, Template.IconImage, true,, Template.AbilitySourceName);
-	Effect2.DuplicateResponse = eDupe_Ignore;
-    Template.AddTargetEffect(Effect2);
+	ArmourEffect = new class'X2Effect_MeristLayeredArmor';
+	ArmourEffect.bUseDifficulySettings = true;
+	ArmourEffect.PrcDamageCapDifficulty = default.IMPACT_V2XCOM_DAMAGE_CAP;
+	ArmourEffect.BuildPersistentEffect(1, true, false);
+	ArmourEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.LocHelpText, Template.IconImage, false);
+	Template.AddTargetEffect(ArmourEffect);
 
-    Effect1 = new class'X2Effect_MeristLayeredArmor';
-    Effect1.EffectName = 'LayeredArmorEffect';
-    Effect1.PrcDamageCap = 40;
-    Effect1.strFlyoverMessage = "Layered Armor";
-    Effect1.BuildPersistentEffect(1, true, false);
-    //Effect1.SetDisplayInfo(ePerkBuff_Bonus, "Layered Armor", "", Template.IconImage, true,, Template.AbilitySourceName);
-	Effect1.DuplicateResponse = eDupe_Ignore;
-    Template.AddTargetEffect(Effect1);
-
+	// This effects ticks at start of each players' turn
+	ValueEffect = new class'X2Effect_ClearUnitValuesOnTick';
+	ValueEffect.ValuesToClear.AddItem('DamageThisTurn');
+	ValueEffect.BuildPersistentEffect(1, true, false, true, eGameRule_PlayerTurnBegin);
+	Template.AddTargetEffect(ValueEffect);
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
-	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
-	//Template.BuildInterruptGameStateFn = TypicalAbility_BuildInterruptGameState;
 
-	Template.ConcealmentRule = eConceal_Always;
-
-	Template.AdditionalAbilities.AddItem('ClearDamageThisTurnAbility_LW');
-
-	Template.bDisplayInUITooltip = true;
-	Template.bDisplayInUITacticalText = true;
+	Template.OverrideAbilities.AddItem('LayeredArmour_LW');
 
 	return Template;
 }

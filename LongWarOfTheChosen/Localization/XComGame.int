@@ -7220,8 +7220,8 @@ LocFlyOverText="Misty Madness"
 
 [Impenetrable_LW X2AbilityTemplate]
 LocFriendlyName="Impenetrable"
-LocHelpText="Impact Compensation Stacking limit is increased by 1, and Enhanced Layered Armor damage cap is reduced by 10%."
-LocLongDescription="Impact Compensation Stacking limit is increased by 1, and Enhanced Layered Armor damage cap is reduced by 10%."
+LocHelpText="Impact Compensation stack limit is increased by 1, and Enhanced Layered Armor damage cap is reduced by <Ability:IMPENETRABLE_BONUS_PCT_DR>%."
+LocLongDescription="Impact Compensation stack limit is increased by 1, and Enhanced Layered Armor damage cap is reduced by <Ability:IMPENETRABLE_BONUS_PCT_DR>%."
 LocFlyOverText="Impenetrable"
 
 [YouCannotHide_LW X2AbilityTemplate]
@@ -7452,13 +7452,15 @@ LocHelpText="After taking damage, gain a stacking <Ability:IMPACT_COMPENSATION_P
 LocFriendlyName="Enhanced Layered Armor"
 LocFlyOverText="Enhanced Layered Armor"
 LocLongDescription="This unit can only take <Ability:IMPACT_V2_DAMAGE_CAP>% of their max HP from any single attack. Damage per turn above this limit is reduced by <Ability:IMPACT_V2_PCT_DR>%."
-LocHelpText="The damage cap resets at the start of each turn."
+LocHelpText="This unit can only take <Ability:IMPACT_V2_DAMAGE_CAP>% of their max HP from any single attack. Damage per turn above this limit is reduced by <Ability:IMPACT_V2_PCT_DR>%."
+LocPromotionPopupText="<Bullet> Damage cap resets at the start of each turn."
 
 [ImpactCompensationV2XCOM_LW X2AbilityTemplate]
 LocFriendlyName="Enhanced Layered Armor"
 LocFlyOverText="Enhanced Layered Armor"
-LocLongDescription="This unit can only take <Ability:IMPACT_V2XCOM_DAMAGE_CAP>% of their max HP from any single attack, and damage from subsequent attacks is reduced by <Ability:IMPACT_V2XCOM_PCT_DR>% once the unit has taken this amount of damage during the turn."
-LocHelpText="The damage cap resets at the start of each turn."
+LocLongDescription="This unit can only take <Ability:IMPACT_V2XCOM_DAMAGE_CAP>% of their max HP from any single attack. Damage per turn above this limit is reduced by <Ability:IMPACT_V2XCOM_PCT_DR>%."
+LocLongDescription="This unit can only take <Ability:IMPACT_V2XCOM_DAMAGE_CAP>% of their max HP from any single attack. Damage per turn above this limit is reduced by <Ability:IMPACT_V2XCOM_PCT_DR>%."
+LocPromotionPopupText="<Bullet> Damage cap resets at the start of each turn."
 
 [ImpactCompensationPassiveV2_LW X2AbilityTemplate]
 LocFriendlyName="Enhanced Layered Armor"

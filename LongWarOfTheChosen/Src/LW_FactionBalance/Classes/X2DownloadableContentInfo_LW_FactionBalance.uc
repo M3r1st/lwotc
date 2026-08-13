@@ -2,6 +2,7 @@
 class X2DownloadableContentInfo_LW_FactionBalance extends X2DownloadableContentInfo config (LW_FactionBalance);
 
 var config float REAPER_DETECTION_RANGE_REDUCTION;
+var localized string strFocusCostAll;
 
 static event OnPostTemplatesCreated()
 {
@@ -236,6 +237,8 @@ static function bool AbilityTagExpandHandler_CH(string InString, out string OutS
 	local XComGameState_Effect_Amplify AmplifyState;
 	local X2AbilityTemplate         AbilityTemplate;
 	local X2Effect_CloseEncounters  CEEffect;
+	local X2AbilityCost             Cost;
+	local X2AbilityCost_Focus       FocusCost;
 	local name Type;
 	local int i;
 
@@ -297,7 +300,35 @@ static function bool AbilityTagExpandHandler_CH(string InString, out string OutS
 			OutString = string(AmplifyState.ShotsRemaining);
 		}
 		return true;
-
+	case 'SELFFOCUSCOST_LW':
+		OutString = "0";
+		AbilityTemplate = X2AbilityTemplate(ParseObj);
+		if (AbilityTemplate == none)
+		{
+			AbilityState = XComGameState_Ability(ParseObj);
+			if (AbilityState != none)
+				AbilityTemplate = AbilityState.GetMyTemplate();
+		}
+		if (AbilityTemplate != none)
+		{
+			foreach AbilityTemplate.AbilityCosts(Cost)
+			{
+				FocusCost = X2AbilityCost_Focus(Cost);
+				if (FocusCost != none)
+				{
+					if (FocusCost.ConsumeAllFocus)
+					{
+						OutString = default.strFocusCostAll;
+					}
+					else
+					{
+						OutString = string(FocusCost.FocusAmount);
+					}
+					break;
+				}
+			}
+		}
+		return true;
 	default:
 		return false;
 	}

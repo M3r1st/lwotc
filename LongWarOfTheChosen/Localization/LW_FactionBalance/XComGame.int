@@ -249,4 +249,4 @@ LocLongDescription="Grants a movement only action after throwing a knife. This c
 LocPromotionPopupText="<Bullet/> Grants a movement only action after throwing a knife. This can happen once per turn."
 
 [X2Ability_TemplarAbilitySet]
-AmplifyEffectDesc="Takes an additional <Ability:AmplifyDamageMult>% damage from single-target attacks.<br><br>Attacks remaining: <Ability:AMPLIFY_SHOTS_REMAINING_LW>."
+AmplifyEffectDesc="Takes <Ability:AmplifyDamageMult>% additional damage from attacks.<br>Hits remaining: <Ability:AMPLIFY_SHOTS_REMAINING_LW>."

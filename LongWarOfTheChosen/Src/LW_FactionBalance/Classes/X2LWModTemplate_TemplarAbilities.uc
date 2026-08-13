@@ -342,16 +342,43 @@ static function DisableFocusGainDuringApotheosis(X2AbilityTemplate Template)
 
 static function ModifyAmplifyEffect(X2AbilityTemplate Template)
 {
-	local X2Effect_Amplify_LW AmplifyEffect;
+	local X2Effect_Amplify_LW   AmplifyEffect;
+	// local X2AbilityTag          AbilityTag;
 
 	class'Helpers_LW'.static.RemoveAbilityTargetEffects(Template,'X2Effect_Amplify');
 
 	AmplifyEffect = new class'X2Effect_Amplify_LW';
-	AmplifyEffect.BuildPersistentEffect(1, true, true);
-	AmplifyEffect.SetDisplayInfo(ePerkBuff_Penalty, Template.LocFriendlyName, Template.GetMyLongDescription(), Template.IconImage,,,Template.AbilitySourceName);
-	AmplifyEffect.bRemoveWhenTargetDies = true;
 	AmplifyEffect.BonusDamageMult = class'X2Ability_TemplarAbilitySet'.default.AmplifyBonusDamageMult;
 	AmplifyEffect.MinBonusDamage = class'X2Ability_TemplarAbilitySet'.default.AmplifyMinBonusDamage;
+	AmplifyEffect.NumShots = class'X2Ability_TemplarAbilitySet_LW'.default.AMPLIFY_SHOTS;
+	AmplifyEffect.bApplyToDOT = class'X2Ability_TemplarAbilitySet_LW'.default.AMPLIFY_APPLY_TO_DOT;
+
+	if (class'X2Ability_TemplarAbilitySet_LW'.default.AMPLIFY_DURATION > 0)
+	{
+		AmplifyEffect.BuildPersistentEffect(class'X2Ability_TemplarAbilitySet_LW'.default.AMPLIFY_DURATION, false, true, false, eGameRule_PlayerTurnBegin);
+		AmplifyEffect.bUseSourcePlayerState = true;
+	}
+	else
+	{
+		AmplifyEffect.BuildPersistentEffect(1, true, true);
+	}
+	AmplifyEffect.bRemoveWhenTargetDies = true;
+
+	AmplifyEffect.SetDisplayInfo(ePerkBuff_Penalty,
+		class'X2Ability_TemplarAbilitySet'.default.AmplifyEffectName,
+		class'X2Ability_TemplarAbilitySet'.default.AmplifyEffectDesc,
+		Template.IconImage,,,
+		Template.AbilitySourceName);
+
+	// AbilityTag = X2AbilityTag(`XEXPANDCONTEXT.FindTag("Ability"));
+	// AbilityTag.ParseObj = AmplifyEffect;
+	// AmplifyEffect.SetDisplayInfo(ePerkBuff_Penalty,
+	// 	class'X2Ability_TemplarAbilitySet'.default.AmplifyEffectName,
+	// 	`XEXPAND.ExpandString(class'X2Ability_TemplarAbilitySet'.default.AmplifyEffectDesc),
+	// 	Template.IconImage,,,
+	// 	Template.AbilitySourceName);
+	// AbilityTag.ParseObj = none;
+
 	Template.AddTargetEffect(AmplifyEffect);
 
 }

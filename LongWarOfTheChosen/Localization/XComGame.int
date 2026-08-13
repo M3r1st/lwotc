@@ -7715,10 +7715,10 @@ LocPromotionPopupText="<Bullet/> Volt has no cooldown, but costs 1 Focus.<br/><B
 
 [Amplify X2AbilityTemplate]
 LocFriendlyName="Amplify"
-LocLongDescription="Mark a single target with a Psionic lens, causing them to take an additional <Ability:AmplifyDamageMult/>% damage from the next 3 attacks. Costs 1 Focus, free action."
-LocHelpText="Mark a single target with a Psionic lens, causing them to take an additional <Ability:AmplifyDamageMult/>% damage from the next 3 attacks. Costs 1 Focus, free action."
+LocLongDescription="Mark a single target with a Psionic lens, causing them to take <Ability:AmplifyDamageMult>% additional damage from the next <Ability:AMPLIFY_SHOTS_LW> hits. Costs <Ability:SelfFocusCost_LW> Focus. Free action."
+LocHelpText="Mark a target, causing them to take <Ability:AmplifyDamageMult>% additional damage from the next <Ability:AMPLIFY_SHOTS_LW> hits. Costs <Ability:SelfFocusCost_LW> Focus."
 LocHitMessage="Amplified"
-LocPromotionPopupText="<Bullet/> Amplify will last for 3 damage instances.<br/><Bullet/> Amplify is a free action.<br/><Bullet/> Has a <Ability:SelfCooldown_LW/> turn cooldown.<br/>"
+LocPromotionPopupText="<Bullet> The effect lasts for <Ability:AMPLIFY_SHOTS_LW> instances of damage.<br><Bullet> Amplify does not apply to damage-over-time effects.<br><Bullet> Free action.<br><Bullet> Has a <Ability:SelfCooldown_LW> turn cooldown."
 
 [CrusaderRage_LW X2AbilityTemplate]
 LocFriendlyName="Crusader's Rage"

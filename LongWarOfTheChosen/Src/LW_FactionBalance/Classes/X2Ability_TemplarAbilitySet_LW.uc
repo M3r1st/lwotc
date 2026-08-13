@@ -24,7 +24,8 @@ var config float APOTHEOSIS_DAMAGE_MULTIPLIER;
 var config int SOUL_SHOT_AIM_MOD;
 
 var config int AMPLIFY_SHOTS;
-
+var config int AMPLIFY_DURATION;
+var config bool AMPLIFY_APPLY_TO_DOT;
 var name PanicImpairingAbilityName;
 
 static function array<X2DataTemplate> CreateTemplates()

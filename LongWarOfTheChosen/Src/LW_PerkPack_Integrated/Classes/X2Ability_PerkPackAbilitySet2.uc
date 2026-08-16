@@ -2292,6 +2292,7 @@ static function X2AbilityTemplate LayeredArmour()
 	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
 	Template.Hostility = eHostility_Neutral;
 	Template.IconImage = "img:///UILibrary_MW.UIPerk_intimidate";
+	Template.bUniqueSource = true;
 
 	Template.AbilityToHitCalc = default.DeadEye;
 	Template.AbilityTargetStyle = default.SelfTarget;
@@ -2301,11 +2302,8 @@ static function X2AbilityTemplate LayeredArmour()
 
 	ArmourEffect = new class'X2Effect_MeristLayeredArmor';
 	ArmourEffect.PrcDamageCap = default.LAYERED_MULT;
-	ArmourEffect.bCapBurstFire = true;
-	ArmourEffect.BuildPersistentEffect(1, true, false, true);
-	ArmourEffect.strFlyoverMessage=Template.LocFriendlyName;
-	ArmourEffect.strFlyoverIcon=Template.IconImage;
-	ArmourEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.GetMyLongDescription(), Template.IconImage, , , Template.AbilitySourceName);
+	ArmourEffect.BuildPersistentEffect(1, true, false);
+	ArmourEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.GetMyHelpText(), Template.IconImage,,, Template.AbilitySourceName);
 	Template.AddTargetEffect(ArmourEffect);
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;

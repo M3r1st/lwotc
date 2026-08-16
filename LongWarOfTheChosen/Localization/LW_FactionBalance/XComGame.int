@@ -247,3 +247,6 @@ LocFriendlyName="Tactical Retreat"
 LocHelpText="Tactical Retreat"
 LocLongDescription="Grants a movement only action after throwing a knife. This can happen once per turn."
 LocPromotionPopupText="<Bullet/> Grants a movement only action after throwing a knife. This can happen once per turn."
+
+[X2Ability_TemplarAbilitySet]
+AmplifyEffectDesc="Takes <Ability:AmplifyDamageMult>% additional damage from attacks.<br>Hits remaining: <Ability:AMPLIFY_SHOTS_REMAINING_LW>."

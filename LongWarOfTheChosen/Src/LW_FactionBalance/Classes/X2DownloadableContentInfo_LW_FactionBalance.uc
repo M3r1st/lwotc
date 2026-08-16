@@ -2,6 +2,7 @@
 class X2DownloadableContentInfo_LW_FactionBalance extends X2DownloadableContentInfo config (LW_FactionBalance);
 
 var config float REAPER_DETECTION_RANGE_REDUCTION;
+var localized string strFocusCostAll;
 
 static event OnPostTemplatesCreated()
 {
@@ -180,6 +181,12 @@ static function bool AbilityTagExpandHandler(string InString, out string OutStri
 	case 'ApotheosisDamageMultiplier':
 		OutString = string(int(class'X2Ability_TemplarAbilitySet_LW'.default.APOTHEOSIS_DAMAGE_MULTIPLIER * 100));
 		return true;
+	case 'AMPLIFY_SHOTS_LW':
+		OutString = string(class'X2Ability_TemplarAbilitySet_LW'.default.AMPLIFY_SHOTS);
+		return true;
+	case 'AMPLIFY_DURATION_LW':
+		OutString = string(class'X2Ability_TemplarAbilitySet_LW'.default.AMPLIFY_DURATION);
+		return true;
 	case 'DEATH_DEALER_CRIT':
 		OutString = string(class'X2LWModTemplate_ReaperAbilities'.default.DEATH_DEALER_CRIT);
 		return true;
@@ -223,17 +230,20 @@ static function bool AbilityTagExpandHandler(string InString, out string OutStri
 
 static function bool AbilityTagExpandHandler_CH(string InString, out string OutString, Object ParseObj, Object StrategyParseObj, XComGameState GameState)
 {
+	local XComGameStateHistory      History;
+	local XComGameState_Effect      EffectState;
+	local XComGameState_Unit        UnitState;
+	local XComGameState_Ability     AbilityState;
+	local XComGameState_Effect_Amplify AmplifyState;
+	local X2AbilityTemplate         AbilityTemplate;
+	local X2Effect_CloseEncounters  CEEffect;
+	local X2AbilityCost             Cost;
+	local X2AbilityCost_Focus       FocusCost;
 	local name Type;
-	local XComGameState_Ability AbilityState;
-	local X2AbilityTemplate AbilityTemplate;
-	local X2Effect_CloseEncounters CEEffect;
 	local int i;
-	local XComGameStateHistory	History;
-    local XComGameState_Effect	EffectState;
-    local XComGameState_Unit	UnitState;
 
 	Type = name(InString);
-	switch(Type)
+	switch (Type)
 	{
 	case 'CLOSE_ENCOUNTERS_RANGE':
 		AbilityTemplate = X2AbilityTemplate(ParseObj);
@@ -257,32 +267,68 @@ static function bool AbilityTagExpandHandler_CH(string InString, out string OutS
 		}
 		OutString = string(class'X2Effect_CloseEncounters'.default.MaxTiles);
 		return true;
-	case 'TEMPLAR_SHIELD_TAG':
 
-	UnitState = XComGameState_Unit(StrategyParseObj);
-	if (UnitState == none)
-	{
-		History = `XCOMHISTORY;
-		EffectState = XComGameState_Effect(ParseObj);
-		if (EffectState != none)
+	case 'TEMPLAR_SHIELD_TAG':
+		UnitState = XComGameState_Unit(StrategyParseObj);
+		if (UnitState == none)
 		{
-			UnitState = XComGameState_Unit(History.GetGameStateForObjectID(EffectState.ApplyEffectParameters.TargetStateObjectRef.ObjectID));
+			History = `XCOMHISTORY;
+			EffectState = XComGameState_Effect(ParseObj);
+			if (EffectState != none)
+			{
+				UnitState = XComGameState_Unit(History.GetGameStateForObjectID(EffectState.ApplyEffectParameters.TargetStateObjectRef.ObjectID));
+			}
+			else 
+			{
+				AbilityState = XComGameState_Ability(ParseObj);
+				if (AbilityState != none)
+				{
+					UnitState = XComGameState_Unit(History.GetGameStateForObjectID(AbilityState.OwnerStateObject.ObjectID));
+				}
+			}
 		}
-		else 
+		if (UnitState == none)
+			return false;
+
+		OutString = "<font color='#a622fa'>" $ class'X2Effect_TemplarShield'.static.GetShieldStrength(UnitState, GameState) $ "</font>";
+		return true;
+
+	case 'AMPLIFY_SHOTS_REMAINING_LW':
+		AmplifyState = XComGameState_Effect_Amplify(ParseObj);
+		if (AmplifyState != none)
+		{
+			OutString = string(AmplifyState.ShotsRemaining);
+		}
+		return true;
+	case 'SELFFOCUSCOST_LW':
+		OutString = "0";
+		AbilityTemplate = X2AbilityTemplate(ParseObj);
+		if (AbilityTemplate == none)
 		{
 			AbilityState = XComGameState_Ability(ParseObj);
 			if (AbilityState != none)
+				AbilityTemplate = AbilityState.GetMyTemplate();
+		}
+		if (AbilityTemplate != none)
+		{
+			foreach AbilityTemplate.AbilityCosts(Cost)
 			{
-				UnitState = XComGameState_Unit(History.GetGameStateForObjectID(AbilityState.OwnerStateObject.ObjectID));
+				FocusCost = X2AbilityCost_Focus(Cost);
+				if (FocusCost != none)
+				{
+					if (FocusCost.ConsumeAllFocus)
+					{
+						OutString = default.strFocusCostAll;
+					}
+					else
+					{
+						OutString = string(FocusCost.FocusAmount);
+					}
+					break;
+				}
 			}
 		}
-	}
-    if (UnitState == none)
-		return false;
-
-	OutString = "<font color='#a622fa'>" $ class'X2Effect_TemplarShield'.static.GetShieldStrength(UnitState, GameState) $ "</font>";
-    return true;
-
+		return true;
 	default:
 		return false;
 	}

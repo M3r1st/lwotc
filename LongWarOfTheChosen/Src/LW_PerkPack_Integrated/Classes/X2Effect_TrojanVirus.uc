@@ -35,6 +35,7 @@ static function EventListenerReturn PostEffectTickCheck(Object EventData, Object
 	local XComGameState_AIGroup GroupState;
 	local XComGameState_Unit OldTargetState, NewTargetState, SourceState;
 	local XComGameState_Effect EffectState;
+	local XComGameState_Ability AbilityState;
 	local float AttackerHackStat, DefenderHackDefense, Damage;
 	local int idx;
 
@@ -43,6 +44,7 @@ static function EventListenerReturn PostEffectTickCheck(Object EventData, Object
 	GroupState = XComGameState_AIGroup(EventSource);
 	OldTargetState = XComGameState_Unit(History.GetGameStateForObjectID(EffectState.ApplyEffectParameters.TargetStateObjectRef.ObjectID));
 	SourceState = XComGameState_Unit(History.GetGameStateForObjectID(EffectState.ApplyEffectParameters.SourceStateObjectRef.ObjectID));
+	AbilityState = XComGameState_Ability(History.GetGameStateForObjectID(EffectState.ApplyEffectParameters.AbilityStateObjectRef.ObjectID));
 
 	// short circuit if the effect is already removed
 	if(EffectState.bRemoved)
@@ -71,7 +73,7 @@ static function EventListenerReturn PostEffectTickCheck(Object EventData, Object
 	// effect has worn off, Trojan Virus now kicks in
 	// Compute damage
 	Damage = 0;
-	AttackerHackStat = SourceState.GetCurrentStat(eStat_Hacking) + SourceState.GetUIStatFromAbilities(eStat_Hacking) + SourceState.GetUIStatFromInventory(eStat_Hacking, GameState);
+	AttackerHackStat = class'X2AbilityToHitCalc_Hacking'.static.GetHackAttackForUnit(SourceState, AbilityState);
 	DefenderHackDefense = OldTargetState.GetCurrentStat(eStat_HackDefense);
 	for(idx = 0; idx < default.TROJANVIRUSROLLS; idx++)
 	{
@@ -108,6 +110,7 @@ static function EventListenerReturn OnMindControlLost(Object EventData, Object E
 	local XComGameState_Unit OldTargetState, NewTargetState, SourceState;
 	local XComGameState_Effect EffectState;
 	local StateObjectReference EffectRef;
+	local XComGameState_Ability AbilityState;
 	local float AttackerHackStat, DefenderHackDefense, Damage;
 	local int idx;
 	
@@ -135,6 +138,7 @@ static function EventListenerReturn OnMindControlLost(Object EventData, Object E
 
 	OldTargetState = XComGameState_Unit(History.GetGameStateForObjectID(EffectState.ApplyEffectParameters.TargetStateObjectRef.ObjectID));
 	SourceState = XComGameState_Unit(History.GetGameStateForObjectID(EffectState.ApplyEffectParameters.SourceStateObjectRef.ObjectID));
+	AbilityState = XComGameState_Ability(History.GetGameStateForObjectID(EffectState.ApplyEffectParameters.AbilityStateObjectRef.ObjectID));
 
 	if(OldTargetState.IsStunned() || OldTargetState.AffectedByEffectNames.Find('FullOverrideMC') != INDEX_NONE)
 		return ELR_NoInterrupt;
@@ -146,7 +150,7 @@ static function EventListenerReturn OnMindControlLost(Object EventData, Object E
 	// effect has worn off, Trojan Virus now kicks in
 	// Compute damage
 	Damage = 0;
-	AttackerHackStat = SourceState.GetCurrentStat(eStat_Hacking) + SourceState.GetUIStatFromAbilities(eStat_Hacking) + SourceState.GetUIStatFromInventory(eStat_Hacking, GameState);
+	AttackerHackStat = class'X2AbilityToHitCalc_Hacking'.static.GetHackAttackForUnit(SourceState, AbilityState);
 	DefenderHackDefense = OldTargetState.GetCurrentStat(eStat_HackDefense);
 	for(idx = 0; idx < default.TROJANVIRUSROLLS; idx++)
 	{

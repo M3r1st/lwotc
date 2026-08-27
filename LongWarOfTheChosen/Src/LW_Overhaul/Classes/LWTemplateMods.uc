@@ -230,6 +230,8 @@ var config int AID_PROTOCOL_COOLDOWN;
 var config int FUSE_COOLDOWN;
 var config int INSANITY_MIND_CONTROL_DURATION;
 var config bool INSANITY_ENDS_TURN;
+var config bool RUPTURE_HITS_ARE_CRITS;
+var config int RUPTURE_AMMO_COST;
 var config int RUPTURE_CRIT_BONUS;
 var config int FACEOFF_CHARGES;
 var config int DRAGON_ROUNDS_APPLY_CHANCE;
@@ -1387,8 +1389,17 @@ function ModifyAbilitiesGeneral(X2AbilityTemplate Template, int Difficulty)
 
 	if (Template.DataName == 'BulletShred')
 	{
-		X2AbilityToHitCalc_StandardAim(Template.AbilityToHitCalc).bHitsAreCrits = false;
+		X2AbilityToHitCalc_StandardAim(Template.AbilityToHitCalc).bHitsAreCrits = default.RUPTURE_HITS_ARE_CRITS;
 		X2AbilityToHitCalc_StandardAim(Template.AbilityToHitCalc).BuiltInCritMod = default.RUPTURE_CRIT_BONUS;
+
+		for (k = 0; k < Template.AbilityCosts.Length; k++)
+		{
+			AmmoCost = X2AbilityCost_Ammo(Template.AbilityCosts[k]);
+			if (AmmoCost != none)
+			{
+				AmmoCost.iAmmo = default.RUPTURE_AMMO_COST;
+			}
+		}
 
 		for (k = 0; k < Template.AbilityTargetConditions.Length; k++)
 		{

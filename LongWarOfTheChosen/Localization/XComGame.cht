@@ -5247,8 +5247,8 @@ LocPromotionPopupText="<Bullet/> 導火線有<Ability:SelfCooldown_LW/>回合冷
 
 [BulletShred X2AbilityTemplate]
 LocFriendlyName="撕裂射擊"
-LocLongDescription="一次傷口撕裂的射擊提供額外+<Ability:RUPTURE_CRIT_BONUS_LW/>%暴擊率，並使目標未來遭受的所有攻擊受到額外+<Ability:RuptureAmount/>傷害。"
-LocHelpText="一次傷口撕裂的射擊提供額外+<Ability:RUPTURE_CRIT_BONUS_LW/>%暴擊率，並使目標未來遭受的所有攻擊受到額外+<Ability:RuptureAmount/>傷害。"
+; LocLongDescription="一次傷口撕裂的射擊提供額外+<Ability:RUPTURE_CRIT_BONUS_LW/>%暴擊率，並使目標未來遭受的所有攻擊受到額外+<Ability:RuptureAmount/>傷害。"
+; LocHelpText="一次傷口撕裂的射擊提供額外+<Ability:RUPTURE_CRIT_BONUS_LW/>%暴擊率，並使目標未來遭受的所有攻擊受到額外+<Ability:RuptureAmount/>傷害。"
 ; LWOTC needs translation
 LocPromotionPopupText="<Bullet/> 撕裂射擊需要<Ability:SelfAmmoCost/>彈藥。<br/><Bullet/> 撕裂射擊有<Ability:SelfCooldown_LW/>回合冷卻時間。<br/><Bullet/> 被撕裂的目標每次遭受攻擊會額外承受<Ability:RuptureAmount/>點傷害。<br/>"
 ; End translation

@@ -4666,8 +4666,8 @@ TimerSmashNGrabSubTitle="エイリアンの増援までのターン"
 LocPromotionPopupText="<Bullet/>信管のクールダウンは<Ability:SelfCooldown/>ターン。<br/>"
 
 [BulletShred X2AbilityTemplate]
-LocLongDescription="装甲破壊攻撃には大きなクリティカルボーナスが与えられ、またターゲットは以降の全ての攻撃から受けるダメージが+<Ability:RuptureAmount/> される。"
-LocHelpText="装甲破壊攻撃には大きなクリティカルボーナスが与えられ、またターゲットは以降の全ての攻撃から追加のダメージを受ける。"
+; LocLongDescription="装甲破壊攻撃には大きなクリティカルボーナスが与えられ、またターゲットは以降の全ての攻撃から受けるダメージが+<Ability:RuptureAmount/> される。"
+; LocHelpText="装甲破壊攻撃には大きなクリティカルボーナスが与えられ、またターゲットは以降の全ての攻撃から追加のダメージを受ける。"
 
 [SoulSteal X2AbilityTemplate]
 LocLongDescription="魂の一撃で与えたダメージの半分を回復し、無傷なら摩耗アーマーポイントに1を与える。"

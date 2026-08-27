@@ -4664,9 +4664,8 @@ BriefSummary="유용한 자원이 들어있는 작은 상자입니다."
 LocPromotionPopupText="<Bullet/> 퓨즈는 <Ability:SelfCooldown/>턴 동안 쿨타임을 가집니다.<br/>"
 
 [BulletShred X2AbilityTemplate]
-LocLongDescription="파열 사격은 치명타율을 크게 높여주며, 이후 대상이 공격을 받으면 <Ability:RuptureAmount/> 의 추가
- 피해를 입습니다."
-LocHelpText="파열 사격은 치명타율을 크게 높여주며, 이후 대상이 공격을 받으면 추가 대미지를 입습니다."
+; LocLongDescription="파열 사격은 치명타율을 크게 높여주며, 이후 대상이 공격을 받으면 <Ability:RuptureAmount/> 의 추가 피해를 입습니다."
+; LocHelpText="파열 사격은 치명타율을 크게 높여주며, 이후 대상이 공격을 받으면 추가 대미지를 입습니다."
 
 [CoupDeGrace2 X2AbilityTemplate]
 LocFriendlyName="최후의 일격"

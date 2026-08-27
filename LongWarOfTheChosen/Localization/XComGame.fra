@@ -5156,8 +5156,8 @@ LocPromotionPopupText="<Bullet/> Temps de rechargement de <Ability:SelfCooldown_
 
 [BulletShred X2AbilityTemplate]
 ; LWOTC translated (2)
-LocLongDescription="Un Tir de rupture procure un bonus de <Ability:RUPTURE_CRIT_BONUS_LW/>% en chances de coup critique. Les unités prises pour cible par un Tir de rupture reçoivent <Ability:RuptureAmount/> point(s) de dégâts supplémentaires chaque fois qu'elles sont blessées par une nouvelle attaque."
-LocHelpText="Un Tir de rupture procure un bonus de <Ability:RUPTURE_CRIT_BONUS_LW/>% en chances de coup critique. Les unités prises pour cible par un Tir de rupture reçoivent <Ability:RuptureAmount/> point(s) de dégâts supplémentaires chaque fois qu'elles sont blessées par une nouvelle attaque."
+; LocLongDescription="Un Tir de rupture procure un bonus de <Ability:RUPTURE_CRIT_BONUS_LW/>% en chances de coup critique. Les unités prises pour cible par un Tir de rupture reçoivent <Ability:RuptureAmount/> point(s) de dégâts supplémentaires chaque fois qu'elles sont blessées par une nouvelle attaque."
+; LocHelpText="Un Tir de rupture procure un bonus de <Ability:RUPTURE_CRIT_BONUS_LW/>% en chances de coup critique. Les unités prises pour cible par un Tir de rupture reçoivent <Ability:RuptureAmount/> point(s) de dégâts supplémentaires chaque fois qu'elles sont blessées par une nouvelle attaque."
 LocPromotionPopupText="<Bullet/> Nécessite <Ability:SelfAmmoCost/> munitions.<br/><Bullet/> Temps de rechargement de <Ability:SelfCooldown_LW/> tour(s).<br/><Bullet/> L'unité affectée subit <Ability:RuptureAmount/> point(s) de dégâts supplémentaires à chaque attaque.<br/>"
 ; End translated (2)
 

@@ -8143,3 +8143,14 @@ exec function TedTest_ClearUnitInventories()
 
 	`GAMERULES.SubmitGameState(NewGameState);
 }
+
+// static function bool AddArmoryUIStatMarkups(const ECharStatType Stat, out int Result, const array<SoldierClassAbilityType> SoldierAbilities, const XComGameState_Unit UnitState)
+// {
+// 	if (Stat == eStat_Mobility)
+// 	{
+// 		Result = -1 * class'X2Effect_ItemWeight2'.static.GetItemWeightForUnit(UnitState);
+// 		return true;
+// 	}
+
+// 	return false;
+// }

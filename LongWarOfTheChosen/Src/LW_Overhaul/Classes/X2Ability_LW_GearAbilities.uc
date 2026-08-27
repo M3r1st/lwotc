@@ -591,27 +591,39 @@ static function X2AbilityTemplate CreateNeurowhipAbility()
 
 static function X2AbilityTemplate CreateSmallItemWeightAbility()
 {
-	local X2AbilityTemplate								Template;	
-	local X2Effect_ItemWeight							WeightEffect;
+	local X2AbilityTemplate         Template;
+	// local X2Effect_ItemWeight       WeightEffect;
+	local X2Effect_ItemWeight2		WeightEffect2;
+	local X2Condition_UnitIsXCOM    TeamCondition;
 	
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'SmallItemWeight');
 	Template.AbilitySourceName = 'eAbilitySource_Item';
 	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
 	Template.Hostility = eHostility_Neutral;
 	Template.bDisplayInUITacticalText = false;
+	Template.bUniqueSource = true;
 
 	Template.AbilityToHitCalc = default.DeadEye;
 	Template.AbilityTargetStyle = default.SelfTarget;
 	Template.AbilityTriggers.AddItem(default.UnitPostBeginPlayTrigger);
 	//Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_ammo_stiletto";
 
-	WeightEffect = new class'X2Effect_ItemWeight';
-	WeightEffect.EffectName = 'SmallItemWeight';
-	WeightEffect.BuildPersistentEffect (1, true, false, false);
-	//WeightEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.GetMyLongDescription(), Template.IconImage, false, , Template.AbilitySourceName);
-	WeightEffect.bUniqueTarget = true;
-	WeightEffect.DuplicateResponse = eDupe_Allow;
-	Template.AddTargetEffect(WeightEffect);
+	TeamCondition = new class'X2Condition_UnitIsXCOM';
+	TeamCondition.bCheckCanEverBeValid = true;
+	Template.AbilityShooterConditions.AddItem(TeamCondition);
+
+	WeightEffect2 = new class'X2Effect_ItemWeight2';
+	WeightEffect2.BuildPersistentEffect(1, true, false);
+	WeightEffect2.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.GetMyHelpText(), Template.IconImage, false,, Template.AbilitySourceName);
+	Template.AddTargetEffect(WeightEffect2);
+
+	// WeightEffect = new class'X2Effect_ItemWeight';
+	// WeightEffect.EffectName = 'SmallItemWeight';
+	// WeightEffect.BuildPersistentEffect (1, true, false, false);
+	// WeightEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.GetMyLongDescription(), Template.IconImage, false, , Template.AbilitySourceName);
+	// WeightEffect.bUniqueTarget = true;
+	// WeightEffect.DuplicateResponse = eDupe_Allow;
+	// Template.AddTargetEffect(WeightEffect);
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 

@@ -1525,6 +1525,7 @@ static function X2AbilityTemplate LWRocketLauncherAbility()
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	Template.AddMultiTargetEffect(ShellShockEffect);
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -1537,6 +1538,7 @@ static function X2AbilityTemplate LWRocketLauncherAbility()
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	Template.AddMultiTargetEffect(ShockwaveEffect);
 
 	Template.AddShooterEffectExclusions();
@@ -1663,6 +1665,7 @@ static function X2AbilityTemplate LWBlasterLauncherAbility()
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	Template.AddMultiTargetEffect(ShellShockEffect);
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -1675,6 +1678,7 @@ static function X2AbilityTemplate LWBlasterLauncherAbility()
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	Template.AddMultiTargetEffect(ShockwaveEffect);
 
 	CursorTarget = new class'X2AbilityTarget_Cursor';
@@ -1849,6 +1853,7 @@ static function X2AbilityTemplate CreateConcussionRocketAbility()
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	Template.AddMultiTargetEffect(ShellShockEffect);
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -1861,6 +1866,7 @@ static function X2AbilityTemplate CreateConcussionRocketAbility()
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	Template.AddMultiTargetEffect(ShockwaveEffect);
 
 	if (default.ENABLE_CONCUSSION_ROCKET_SMOKE)
@@ -2000,6 +2006,7 @@ static function X2AbilityTemplate CreateBlasterConcussionRocketAbility()
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	Template.AddMultiTargetEffect(ShellShockEffect);
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -2012,6 +2019,7 @@ static function X2AbilityTemplate CreateBlasterConcussionRocketAbility()
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	Template.AddMultiTargetEffect(ShockwaveEffect);
 
 	Template.ActivationSpeech = 'RocketLauncher';
@@ -2168,6 +2176,7 @@ static function X2AbilityTemplate CreateBunkerBusterAbility()
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	Template.AddMultiTargetEffect(ShellShockEffect);
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -2180,6 +2189,7 @@ static function X2AbilityTemplate CreateBunkerBusterAbility()
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	Template.AddMultiTargetEffect(ShockwaveEffect);
 
 	Template.ActivationSpeech = 'Explosion';
@@ -2288,6 +2298,7 @@ static function X2AbilityTemplate CreateShredderRocketAbility()
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	Template.AddMultiTargetEffect(ShellShockEffect);
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -2300,6 +2311,7 @@ static function X2AbilityTemplate CreateShredderRocketAbility()
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	Template.AddMultiTargetEffect(ShockwaveEffect);
 
 	Template.ActivationSpeech = 'RocketLauncher';
@@ -2409,6 +2421,7 @@ static function X2AbilityTemplate CreateBlasterShredderRocketAbility()
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	Template.AddMultiTargetEffect(ShellShockEffect);
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -2421,6 +2434,7 @@ static function X2AbilityTemplate CreateBlasterShredderRocketAbility()
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	Template.AddMultiTargetEffect(ShockwaveEffect);
 
 	Template.ActivationSpeech = 'RocketLauncher';
@@ -2545,6 +2559,7 @@ static function X2AbilityTemplate CreateEMPRocketAbility()
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	Template.AddMultiTargetEffect(ShellShockEffect);
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -2557,6 +2572,7 @@ static function X2AbilityTemplate CreateEMPRocketAbility()
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	Template.AddMultiTargetEffect(ShockwaveEffect);
 
 	Template.ActivationSpeech = 'RocketLauncher';
@@ -2681,6 +2697,7 @@ static function X2AbilityTemplate CreateBlasterEMPRocketAbility()
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	Template.AddMultiTargetEffect(ShellShockEffect);
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -2693,6 +2710,7 @@ static function X2AbilityTemplate CreateBlasterEMPRocketAbility()
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	Template.AddMultiTargetEffect(ShockwaveEffect);
 
 	Template.ActivationSpeech = 'RocketLauncher';

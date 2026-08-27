@@ -2677,6 +2677,7 @@ static function AddEffectsToGrenades()
 	ShellShockEffect.SetDisplayInfo(ePerkBuff_Penalty, default.ShellshockEffectName , default.ShellshockEffectDesc, "img:///UILibrary_LWOTC.UIPerk_shellshock", true);
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -2688,6 +2689,7 @@ static function AddEffectsToGrenades()
 	ShockwaveEffect.SetDisplayInfo(ePerkBuff_Penalty, default.ShockwaveEffectName, default.ShockwaveEffectDesc, "img:///UILibrary_LWOTC.UIPerk_shockwave", true);
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
 	
 

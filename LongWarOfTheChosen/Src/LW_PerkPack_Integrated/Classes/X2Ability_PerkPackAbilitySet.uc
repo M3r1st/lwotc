@@ -1212,25 +1212,49 @@ Static function X2AbilityTemplate DoubleTap2ndShot()
 
 static function X2AbilityTemplate AddTraverseFireAbility()
 {
-	local X2AbilityTemplate						Template;
-	local X2Effect_TraverseFire					ActionEffect;
-	
-	`CREATE_X2ABILITY_TEMPLATE (Template, 'TraverseFire');
+	local X2AbilityTemplate         Template;
+	local X2Effect_Persistent       PersistentEffect;
+	local X2Effect_TraverseFire     Effect;
+
+	`CREATE_X2ABILITY_TEMPLATE(Template, 'TraverseFire');
+
 	Template.IconImage = "img:///UILibrary_LW_PerkPack.LW_AbilityTraverseFire";
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
-	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
+	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_NeverShow;
 	Template.Hostility = eHostility_Neutral;
+	Template.bIsPassive = true;
+	Template.bUniqueSource = true;
+
+	Template.bCrossClassEligible = false;
+
 	Template.AbilityToHitCalc = default.DeadEye;
 	Template.AbilityTargetStyle = default.SelfTarget;
 	Template.AbilityTriggers.AddItem(default.UnitPostBeginPlayTrigger);
-	Template.bIsPassive = true;
-	ActionEffect = new class 'X2Effect_TraverseFire';
-	ActionEffect.SetDisplayInfo (ePerkBuff_Passive, Template.LocFriendlyName, Template.GetMyLongDescription(), Template.IconImage, true,,Template.AbilitySourceName);
-	ActionEffect.BuildPersistentEffect(1, true, false);
-	Template.AddTargetEffect(ActionEffect);
-	Template.bCrossClassEligible = false;
+
+	// Separate effects for the passive and the refund
+	PersistentEffect = new class'X2Effect_Persistent';
+	PersistentEffect.EffectName = 'TraverseFire_LW_Passive';
+	PersistentEffect.DuplicateResponse = eDupe_Ignore;
+	PersistentEffect.BuildPersistentEffect(1, true, false);
+	PersistentEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.GetMyHelpText(), Template.IconImage,,, Template.AbilitySourceName);
+	Template.AddTargetEffect(PersistentEffect);
+
+	Effect = new class'X2Effect_TraverseFire';
+	Effect.EffectName = 'TraverseFire_LW';
+	Effect.bRefundAll = false;
+	Effect.ActionPointType = class'X2CharacterTemplateManager'.default.RunAndGunActionPoint;
+	Effect.AllowedAbilities = class'X2Effect_TraverseFire'.default.TF_ABILITYNAMES;
+	Effect.ActivationsPerTurn = class'X2Effect_TraverseFire'.default.TF_USES_PER_TURN;
+	Effect.bMatchSourceWeapon = true;
+	Effect.bShowFlyover = true;
+	Effect.bAllowCBACOverride = class'X2Effect_TraverseFire'.default.TF_ALLOW_CBAC_OVERRIDE;
+	Effect.strCBACOverrideColor = class'X2Effect_TraverseFire'.default.TF_CBAC_OVERRIDE_COLOR;
+	Effect.BuildPersistentEffect(1, true, false);
+	Effect.SetDisplayInfo(ePerkBuff_Bonus, Template.LocFriendlyName, Template.GetMyHelpText(), Template.IconImage, false);
+	Template.AddTargetEffect(Effect);
+
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
-	// Visualization handled in Effect
+
 	return Template;
 }
 

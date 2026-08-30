@@ -116,6 +116,7 @@ static function bool AbilityTagExpandHandler_CH(string InString, out string OutS
 {
 	local XComGameState_Ability AbilityState;
 	local XComGameState_Effect EffectState;
+	local XComGameState_Unit UnitState;
 	local X2AbilityTemplate AbilityTemplate;
 	local X2ItemTemplate ItemTemplate;
 	local name Type;
@@ -657,6 +658,42 @@ static function bool AbilityTagExpandHandler_CH(string InString, out string OutS
 			return true;
 		case 'SensorOverlays_CritBonus_LW':
 			OutString = string(class'X2Ability_XMBPerkAbilitySet'.default.SensorOverlaysCritBonus);
+			return true;
+		case 'ClassName_Source':
+			if (StrategyParseObj != none)
+			{
+				OutString = XComGameState_Unit(StrategyParseObj).GetSoldierClassTemplate().DisplayName;
+				return true;
+			}
+			else
+			{
+				AbilityState = XComGameState_Ability(ParseObj);
+				if (AbilityState != none)
+				{
+					UnitState = XComGameState_Unit(`XCOMHISTORY.GetGameStateForObjectID(AbilityState.OwnerStateObject.ObjectID));
+				}
+				else
+				{
+					EffectState = XComGameState_Effect(ParseObj);
+					if (EffectState != none)
+					{
+						UnitState = XComGameState_Unit(`XCOMHISTORY.GetGameStateForObjectID(EffectState.ApplyEffectParameters.SourceStateObjectRef.ObjectID));
+					}
+				}
+				if (UnitState != none)
+				{
+					if (UnitState.GetSoldierClassTemplate() != none)
+					{
+						OutString = UnitState.GetSoldierClassTemplate().DisplayName;
+					}
+					else
+					{
+						OutString = UnitState.GetMyTemplate().strCharacterName;
+					}
+					return true;
+				}
+			}
+			OutString = class'XGLocalizedData'.default.StaffTypeNames[eStaff_Soldier];
 			return true;
 		default:
 			return false;

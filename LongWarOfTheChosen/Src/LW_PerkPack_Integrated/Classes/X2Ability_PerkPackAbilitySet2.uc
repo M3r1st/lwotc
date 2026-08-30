@@ -2677,6 +2677,7 @@ static function AddEffectsToGrenades()
 	ShellShockEffect.SetDisplayInfo(ePerkBuff_Penalty, default.ShellshockEffectName , default.ShellshockEffectDesc, "img:///UILibrary_LWOTC.UIPerk_shellshock", true);
 	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
 	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
 	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
 
 	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
@@ -2688,6 +2689,7 @@ static function AddEffectsToGrenades()
 	ShockwaveEffect.SetDisplayInfo(ePerkBuff_Penalty, default.ShockwaveEffectName, default.ShockwaveEffectDesc, "img:///UILibrary_LWOTC.UIPerk_shockwave", true);
 	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
 	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
 	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
 	
 
@@ -3069,4 +3071,41 @@ static function X2AbilityTemplate SalvoRainmaker()
 	Template.AdditionalAbilities.AddItem('Salvo');
 
 	return Template;
+}
+
+static function AddShellshockAndShockwaveEffects(out X2AbilityTemplate Template)
+{
+	local X2Effect_PersistentStatChange	ShellShockEffect, ShockwaveEffect;
+	local X2Condition_AbilityProperty	AbilityCondition;
+	local X2Condition_UnitProperty		EnemyCondition;
+
+	EnemyCondition = new class'X2Condition_UnitProperty';
+	EnemyCondition.ExcludeFriendlyToSource = true;
+	EnemyCondition.ExcludeHostileToSource = false;
+
+	ShellShockEffect = new class'X2Effect_PersistentStatChange';
+	AbilityCondition = new class'X2Condition_AbilityProperty';
+	AbilityCondition.OwnerHasSoldierAbilities.AddItem('Shellshock_LW');
+	ShellShockEffect.AddPersistentStatChange(eStat_Offense, -default.SHELLSHOCK_AIM_REDUCTION, modop_Addition);
+	ShellShockEffect.AddPersistentStatChange(eStat_CritChance, -default.SHELLSHOCK_CRIT_CHANCE_REDUCTION, modop_Addition);
+	ShellShockEffect.BuildPersistentEffect(default.SHELLSHOCK_TURNS, false, false, false, eGameRule_PlayerTurnEnd);
+	ShellShockEffect.SetDisplayInfo(ePerkBuff_Penalty, default.ShellshockEffectName , default.ShellshockEffectDesc, "img:///UILibrary_LWOTC.UIPerk_shellshock", true);
+	ShellShockEffect.TargetConditions.AddItem(AbilityCondition);
+	ShellShockEffect.TargetConditions.AddItem(EnemyCondition);
+	ShellShockEffect.EffectName = 'Shellshock_LW_Effect';
+	ShellShockEffect.bDisplayInSpecialDamageMessageUI = true;
+	Template.AddMultiTargetEffect(ShellShockEffect);
+
+	ShockwaveEffect = new class'X2Effect_PersistentStatChange';
+	AbilityCondition = new class'X2Condition_AbilityProperty';
+	AbilityCondition.OwnerHasSoldierAbilities.AddItem('Shockwave_LW');
+	ShockwaveEffect.AddPersistentStatChange(eStat_Defense, -default.SHOCKWAVE_DEF_REDUCTION, modop_Addition);
+	ShockwaveEffect.AddPersistentStatChange(eStat_Dodge, -default.SHOCKWAVE_DODGE_REDUCTION, modop_Addition);
+	ShockwaveEffect.BuildPersistentEffect(default.SHOCKWAVE_TURNS, false, false, false, eGameRule_PlayerTurnEnd);
+	ShockwaveEffect.SetDisplayInfo(ePerkBuff_Penalty, default.ShockwaveEffectName, default.ShockwaveEffectDesc, "img:///UILibrary_LWOTC.UIPerk_shockwave", true);
+	ShockwaveEffect.TargetConditions.AddItem(AbilityCondition);
+	ShockwaveEffect.TargetConditions.AddItem(EnemyCondition);
+	ShockwaveEffect.EffectName = 'Shockwave_LW_Effect';
+	ShockwaveEffect.bDisplayInSpecialDamageMessageUI = true;
+	Template.AddMultiTargetEffect(ShockwaveEffect);
 }

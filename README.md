@@ -48,7 +48,7 @@ Note that you need to own the Shen's Last Gift DLC to build (and play) this vers
     Git client tool.
 
  1. Download the LWOTC media assets (video, graphics and sound) from
-    [this Google Drive link](https://drive.google.com/file/d/1P2njxwOIVeNDlox_21S5aQ2H_HqkMcvF/view?usp=sharing)
+    [this Google Drive link](https://drive.google.com/file/d/1ll6xOAQH71By8HRdt-apCTizcS0aU8h9/view?usp=sharing)
     and unpack the resulting zip file into this project's `LongWarOfTheChosen` directory. It should merge the contents of the `Content` and `ContentForCook` directories. If it replaces any version controlled files, `git checkout` them to restore their latest version.
 	
 	After unpacking, you may have to move `md_Warehouse_02.umap` and `sm_Megablock_Middle_Diner_LW` from `LongWarOfTheChosen\Content\Parcels` to `LongWarOfTheChosen\ContentForCook\Parcels`. Your build will fail if they are not present at this location.

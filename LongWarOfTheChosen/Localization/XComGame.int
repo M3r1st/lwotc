@@ -5404,9 +5404,9 @@ LocPromotionPopupText="<Bullet/> Fuse has a <Ability:SelfCooldown_LW/> turn cool
 
 [BulletShred X2AbilityTemplate]
 ; LWOTC needs translation (2)
-LocLongDescription="A Rupture shot grants a <Ability:RUPTURE_CRIT_BONUS_LW/>% bonus to critical hit chances and ensures that the target takes an additional +<Ability:RuptureAmount/> damage from all attacks in the future."
-LocHelpText="A Rupture shot grants a <Ability:RUPTURE_CRIT_BONUS_LW/>% bonus to critical hit chances and ensures that the target takes increased damage from all attacks in the future."
-LocPromotionPopupText="<Bullet/> Rupture requires <Ability:SelfAmmoCost/> ammo points.<br/><Bullet/> Rupture has a <Ability:SelfCooldown_LW/> turn cooldown.<br/><Bullet/> Ruptured targets take <Ability:RuptureAmount/> additional damage from every attack.<br/>"
+LocLongDescription="Take a special shot that has +<Ability:RuptureAmount> rupture and always deals critical damage. Requires <Ability:SelfAmmoCost> ammo and has a <Ability:SelfCooldown_LW>-turn cooldown."
+LocHelpText="Special shot that has bonus rupture and always deals critical damage. Requires <Ability:SelfAmmoCost> ammo."
+LocPromotionPopupText="<Bullet> Rupture requires <Ability:SelfAmmoCost> ammo.<br><Bullet> Rupture has a <Ability:SelfCooldown_LW>-turn cooldown.<br><Bullet> Ruptured targets take additional damage from every attack.<br><Bullet> Rupture from multiple attacks doesn't stack. Higher rupture value overwrites the lower one.<br><Bullet> The rupture of the attack is equal to the sum of the rupture from the weapon, ammo and ability."
 ; End translation (2)
 
 [Faceoff X2AbilityTemplate]

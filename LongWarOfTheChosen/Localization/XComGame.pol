@@ -5019,8 +5019,8 @@ LocHelpText="Jeśli wróg ma przy sobie materiały wybuchowe, Agent Psi może je
 LocPromotionPopupText="<Bullet/> Fuzja wymaga <Ability:SelfCooldown_LW/> tur{y} odnowienia.<br/>"
 
 [BulletShred X2AbilityTemplate]
-LocLongDescription="Strzał Rozrywający zapewnia premię <Ability:RUPTURE_CRIT_BONUS_LW/>% do szans na trafienie krytyczne i gwarantuje, że cel otrzyma dodatkowe +<Ability:RuptureAmount/> obrażenia od wszystkich ataków w przyszłości."
-LocHelpText="Strzał Rozrywający zapewnia premię <Ability:RUPTURE_CRIT_BONUS_LW/>% do szans na trafienie krytyczne i gwarantuje, że cel otrzyma dodatkowe +<Ability:RuptureAmount/> obrażenia od wszystkich ataków w przyszłości."
+; LocLongDescription="Strzał Rozrywający zapewnia premię <Ability:RUPTURE_CRIT_BONUS_LW/>% do szans na trafienie krytyczne i gwarantuje, że cel otrzyma dodatkowe +<Ability:RuptureAmount/> obrażenia od wszystkich ataków w przyszłości."
+; LocHelpText="Strzał Rozrywający zapewnia premię <Ability:RUPTURE_CRIT_BONUS_LW/>% do szans na trafienie krytyczne i gwarantuje, że cel otrzyma dodatkowe +<Ability:RuptureAmount/> obrażenia od wszystkich ataków w przyszłości."
 LocPromotionPopupText="<Bullet/> Rozerwanie wymaga punktów amunicji <Ability:SelfAmmoCost/>.<br/><Bullet/> Rozerwanie wymaga <Ability:SelfCooldown_LW/> tur{y} odnowienia.<br/><Bullet/> Rozerwane cele otrzymują <Ability:RuptureAmount/> dodatkowe obrażenia przed każdym atakiem.<br/>"
 
 [Faceoff X2AbilityTemplate]

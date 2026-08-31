@@ -4574,8 +4574,8 @@ LocHelpText="Wenn ein Feind Sprengsätze mit sich führt, kann der Psi-Soldat si
 LocPromotionPopupText="<Bullet/> Sprengzünder hat eine Abklingzeit von <Ability:SelfCooldown_LW/> Runden.<br/>"
 
 [BulletShred X2AbilityTemplate]
-LocLongDescription="Ein Rupturschuss gewährt eine um <Ability:RUPTURE_CRIT_BONUS_LW/> erhöhte kritische Trefferchance und sorgt dafür, dass das Ziel einen um +<Ability:RuptureAmount/> erhöhten Schaden durch alle zukünftigen Angriffe nimmt."
-LocHelpText="Ein Rupturschuss gewährt +<Ability:RUPTURE_CRIT_BONUS_LW/> % kritische Trefferchance und sorgt dafür, dass das Ziel erhöhten Schaden durch alle zukünftigen Angriffe nimmt."
+; LocLongDescription="Ein Rupturschuss gewährt eine um <Ability:RUPTURE_CRIT_BONUS_LW/> erhöhte kritische Trefferchance und sorgt dafür, dass das Ziel einen um +<Ability:RuptureAmount/> erhöhten Schaden durch alle zukünftigen Angriffe nimmt."
+; LocHelpText="Ein Rupturschuss gewährt +<Ability:RUPTURE_CRIT_BONUS_LW/> % kritische Trefferchance und sorgt dafür, dass das Ziel erhöhten Schaden durch alle zukünftigen Angriffe nimmt."
 LocPromotionPopupText="<Bullet/> Ruptur benötigt <Ability:SelfAmmoCost/> Munitionspunkte und hat eine Abklingzeit von <Ability:SelfCooldown_LW/> Runden.<br/><Bullet/> Von Ruptur getroffene Ziele erleiden bei jedem Angriff <Ability:RuptureAmount/> Zusatzschaden.<br/>"
 
 [Faceoff X2AbilityTemplate]

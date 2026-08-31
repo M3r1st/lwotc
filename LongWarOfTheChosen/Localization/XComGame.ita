@@ -4662,8 +4662,8 @@ TimerSmashNGrabSubTitle="Turni mancanti al contrattacco degli alieni"
 LocPromotionPopupText="<Bullet/> La spoletta richiede <Ability:SelfCooldown/> turni di ricarica.<br/>"
 
 [BulletShred X2AbilityTemplate]
-LocLongDescription="Un colpo di rottura ha un’elevata probabilità di critico e garantisce che il bersaglio subisca +<Ability:RuptureAmount/> danni aggiuntivi da tutti gli attacchi successivi."
-LocHelpText="Un colpo di rottura ha un’elevata probabilità di critico e garantisce che il bersaglio subisca danni aggiuntivi da tutti gli attacchi successivi."
+; LocLongDescription="Un colpo di rottura ha un’elevata probabilità di critico e garantisce che il bersaglio subisca +<Ability:RuptureAmount/> danni aggiuntivi da tutti gli attacchi successivi."
+; LocHelpText="Un colpo di rottura ha un’elevata probabilità di critico e garantisce che il bersaglio subisca danni aggiuntivi da tutti gli attacchi successivi."
 
 [CoupDeGrace2 X2AbilityTemplate]
 LocFriendlyName="Colpo di grazia"

@@ -5394,8 +5394,8 @@ LocPromotionPopupText="<Bullet/> Cebador tiene un tiempo de enfriamiento de <Abi
 
 ; LWOTC translated
 [BulletShred X2AbilityTemplate]
-LocLongDescription="Un disparo de ruptura confiere <Ability:RUPTURE_CRIT_BONUS_LW/>% de bonificación a la probabilidad de crítico y asegura que el objetivo reciba +<Ability:RuptureAmount/> de daño adicional de todos los ataques en el futuro."
-LocHelpText="Un disparo de ruptura confiere <Ability:RUPTURE_CRIT_BONUS_LW/>% de gran bonificación a la probabilidad de crítico y asegura que el objetivo reciba un mayor daño de todos los ataques en el futuro."
+; LocLongDescription="Un disparo de ruptura confiere <Ability:RUPTURE_CRIT_BONUS_LW/>% de bonificación a la probabilidad de crítico y asegura que el objetivo reciba +<Ability:RuptureAmount/> de daño adicional de todos los ataques en el futuro."
+; LocHelpText="Un disparo de ruptura confiere <Ability:RUPTURE_CRIT_BONUS_LW/>% de gran bonificación a la probabilidad de crítico y asegura que el objetivo reciba un mayor daño de todos los ataques en el futuro."
 LocPromotionPopupText="<Bullet/> Ruptura necesita de <Ability:SelfAmmoCost/> puntos de munición.<br/><Bullet/> Ruptura tiene un tiempo de enfriamiento de <Ability:SelfCooldown_LW/> turnos.<br/><Bullet/> Los objetivos con Ruptura reciben <Ability:RuptureAmount/> de daño adicional en cada ataque.<br/>"
 ; End translated
 

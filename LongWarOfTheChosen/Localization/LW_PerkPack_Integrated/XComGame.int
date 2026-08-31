@@ -240,9 +240,9 @@ LocPromotionPopupText="<Bullet/> Double Tap allows you to take two shots at the 
 [TraverseFire X2AbilityTemplate]
 LocFriendlyName="Traverse Fire"
 LocFlyOverText="Traverse Fire"
-LocLongDescription="After taking a standard shot with your primary weapon with your first action, you may take an additional non-movement action."
-LocHelpText="After taking a standard shot with your primary weapon with your first action, you may take an additional non-movement action."
-LocPromotionPopupText="<Bullet/> After taking a standard shot with your primary weapon with your first action, you may take an additional non-movement action.<br/>"
+LocLongDescription="After taking a standard shot with your <Ability:BoundWeaponName> with your first action, you may take an additional non-movement action."
+LocHelpText="After taking a standard shot with your <Ability:BoundWeaponName> with your first action, you may take an additional non-movement action."
+LocPromotionPopupText="<Bullet> Can only activate once per turn.<br><Bullet> Free non-offensive actions can be used without invalidating Traverse Fire."
 
 ; LWOTC needs translation
 [WalkFire X2AbilityTemplate]
